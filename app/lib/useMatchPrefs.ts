@@ -29,9 +29,10 @@ export function useMatchPrefs() {
 
   const setMatchPref = (id: string, update: Partial<MatchPrefs>) => {
     setPrefs(prev => {
+      const existing = prev[id] ?? { watchLocation: null, notes: '' }
       const next = {
         ...prev,
-        [id]: { watchLocation: null, notes: '', ...prev[id], ...update }
+        [id]: { ...existing, ...update }
       }
       localStorage.setItem('sport-tracker-prefs', JSON.stringify(next))
       return next
